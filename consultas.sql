@@ -49,3 +49,10 @@ INNER JOIN municipio m ON e.IdMunicipioFk = m.Id;
 SELECT p.Id, p.Nombre, p.ValorUnitCop, p.ValorUnitUsd, p.Codigo, i.Cantidad AS Stock
 FROM prenda p
 INNER JOIN insumo_prendas i ON p.Id = i.IdPrendaFk;
+
+SELECT c.Id, c.nombre, v.Fecha as Fecha_compra, do.cantidad_producida AS Cantidad
+FROM cliente c
+INNER JOIN venta v ON c.Id = v.IdClienteFk
+INNER JOIN orden o ON c.Id = o.IdClienteFk
+INNER JOIN detalle_orden do ON o.Id = do.IdOrdenFk
+WHERE v.Fecha = "2023-08-10";
