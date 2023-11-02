@@ -3,31 +3,48 @@
 **1. Listar todas las ventas que se realizaron en el mes de julio de 2023**
 
 ```sql
-# Consulta realizada ....
+SELECT * FROM venta WHERE YEAR(Fecha) = 2023;
 ```
 
 **2. Seleccionar todos los empleados con sus respectivos cargos y municipios**
 
 ```sql
-# Consulta realizada ....
+SELECT empleado.Id, empleado.nombre, empleado.fecha_ingreso, cargos.descripcion, municipio.nombre
+FROM empleado
+INNER JOIN cargos ON empleado.IdCargoFk = cargos.Id
+INNER JOIN municipio ON empleado.IdMunicipioFk = municipio.Id;
 ```
 
 **3. Obtener la lista de todas las ventas con la información de los clientes y la forma de pago**
 
 ```sql
-# Consulta realizada ....
+SELECT venta.Id, venta.Fecha, cliente.nombre, forma_pago.descripcion
+FROM venta
+INNER JOIN cliente ON venta.IdClienteFk = cliente.Id
+INNER JOIN forma_pago ON venta.IdFormaPagoFk = forma_pago.Id;
 ```
 
 **4. Mostrar los detalles de todas las órdenes junto con los nombres de los empleados y clientes asociados**
 
 ```sql
-# Consulta realizada ....
+SELECT orden.Id, orden.fecha, detalle_orden.cantidad_producir, detalle_orden.cantidad_producida, empleado.nombre AS Empleado, cliente.nombre AS cliente
+FROM orden
+INNER JOIN detalle_orden ON orden.Id = detalle_orden.IdOrdenFk
+INNER JOIN empleado ON orden.IdEmpleadoFk = empleado.Id
+INNER JOIN cliente ON orden.IdClienteFk = cliente.Id;
 ```
 
 **5. Listar los productos disponibles en el inventario junto con su talla y color**
 
 ```sql
-# Consulta realizada ....
+SELECT p.Id, p.Nombre, p.ValorUnitCop, p.ValorUnitUsd, e.descripcion AS Estado, t.descripcion AS Talla, c.Descripcion AS Color
+FROM prenda p
+INNER JOIN estado e ON p.IdEstadoFk = e.Id
+INNER JOIN inventario ON p.Id = inventario.IdPrendaFk
+INNER JOIN inventario_talla i ON inventario.Id = i.IdInvFk
+INNER JOIN talla t ON i.IdTallaFk = t.Id
+INNER JOIN detalle_orden d ON p.Id = d.IdPrendaFk
+INNER JOIN color c ON d.IdColorFk = c.Id;
 ```
 
 **6. Mostrar todos los proveedores junto con la lista de insumos que suminis**
