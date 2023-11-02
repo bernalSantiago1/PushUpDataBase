@@ -24,3 +24,28 @@ INNER JOIN inventario_talla i ON inventario.Id = i.IdInvFk
 INNER JOIN talla t ON i.IdTallaFk = t.Id
 INNER JOIN detalle_orden d ON p.Id = d.IdPrendaFk
 INNER JOIN color c ON d.IdColorFk = c.Id;
+
+SELECT p.Id, p.NitProveedor, p.Nombre, i.nombre AS Insumo
+FROM proveedor p
+INNER JOIN insumo_proveedor ip ON p.Id = ip.IdProveedorFk
+INNER JOIN insumo i ON ip.IdInsumoFk = i.Id;
+
+SELECT e.nombre, COUNT(*) AS cantidad_ventas
+FROM empleado e
+INNER JOIN venta v ON e.Id = v.IdEmpleadoFk
+GROUP BY e.Id;
+
+SELECT  o.Id, o.fecha, e.descripcion AS Estado, c.nombre AS Cliente, em.nombre AS Empleado 
+FROM orden o
+INNER JOIN estado e ON o.IdEstadoFk = e.Id
+INNER JOIN cliente c ON o.IdClienteFk = c.Id
+INNER JOIN empleado em ON o.IdEmpleadoFk = em.Id
+WHERE e.descripcion = "En proceso";
+
+SELECT e.Id, e.razon_social as Nombre, e.representante_legal, m.nombre AS Municipio
+FROM empresa e
+INNER JOIN municipio m ON e.IdMunicipioFk = m.Id;
+
+SELECT p.Id, p.Nombre, p.ValorUnitCop, p.ValorUnitUsd, p.Codigo, i.Cantidad AS Stock
+FROM prenda p
+INNER JOIN insumo_prendas i ON p.Id = i.IdPrendaFk;

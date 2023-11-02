@@ -50,31 +50,46 @@ INNER JOIN color c ON d.IdColorFk = c.Id;
 **6. Mostrar todos los proveedores junto con la lista de insumos que suminis**
 
 ```sql
-# Consulta realizada ....
+SELECT p.Id, p.NitProveedor, p.Nombre, i.nombre AS Insumo
+FROM proveedor p
+INNER JOIN insumo_proveedor ip ON p.Id = ip.IdProveedorFk
+INNER JOIN insumo i ON ip.IdInsumoFk = i.Id;
 ```
 
 **7. Encontrar la cantidad de ventas realizadas por cada empleado**
 
 ```sql
-# Consulta realizada ....
+SELECT e.nombre, COUNT(*) AS cantidad_ventas
+FROM empleado e
+INNER JOIN venta v ON e.Id = v.IdEmpleadoFk
+GROUP BY e.Id;
 ```
 
 **8. Mostrar la lista de órdenes en proceso junto con los nombres de los clientes y empleados asociados**
 
 ```sql
-# Consulta realizada ....
+SELECT  o.Id, o.fecha, e.descripcion AS Estado, c.nombre AS Cliente, em.nombre AS Empleado 
+FROM orden o
+INNER JOIN estado e ON o.IdEstadoFk = e.Id
+INNER JOIN cliente c ON o.IdClienteFk = c.Id
+INNER JOIN empleado em ON o.IdEmpleadoFk = em.Id
+WHERE e.descripcion = "En proceso";
 ```
 
 **9. Obtener el nombre de la empresa y su respectivo representante legal junto con el nombre del municipio al que pertenecen**
 
 ```sql
-# Consulta realizada ....
+SELECT e.Id, e.razon_social as Nombre, e.representante_legal, m.nombre AS Municipio
+FROM empresa e
+INNER JOIN municipio m ON e.IdMunicipioFk = m.Id;
 ```
 
 **10. Mostrar la lista de prendas y su respectivo stock disponible**
 
 ```sql
-# Consulta realizada ....
+SELECT p.Id, p.Nombre, p.ValorUnitCop, p.ValorUnitUsd, p.Codigo, i.Cantidad AS Stock
+FROM prenda p
+INNER JOIN insumo_prendas i ON p.Id = i.IdPrendaFk;
 ```
 
 **11. Encontrar el nombre de los clientes que realizaron compras en una fecha específica junto con la cantidad de artículos comprados**
